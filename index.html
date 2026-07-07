@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SMB Otdyh — Центр управления</title>
+<style>
+  :root {
+    --forest: #1E3D2F;
+    --forest-deep: #142B21;
+    --sage-light: #E4ECE3;
+    --gold: #C9A227;
+    --ink: #20301F;
+    --muted: #5B6E5E;
+    --danger: #B23A2E;
+    --danger-bg: #F6E3E0;
+    --success: #3F7A54;
+    --success-bg: #E1EEE2;
+    --white: #FFFFFF;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+    background: #F3F5F2;
+    color: var(--ink);
+  }
+  .phone {
+    max-width: 420px;
+    margin: 0 auto;
+    min-height: 100vh;
+    background: var(--white);
+    box-shadow: 0 0 40px rgba(0,0,0,0.08);
+  }
+  header {
+    background: var(--forest);
+    color: var(--white);
+    padding: 20px 20px 16px;
+  }
+  header .row { display: flex; align-items: center; justify-content: space-between; }
+  header h1 { font-size: 17px; margin: 0; font-weight: 600; }
+  header .sub { font-size: 12px; color: #CFE0D3; margin-top: 2px; }
+  .live { display: flex; align-items: center; gap: 5px; font-size: 11px; color: #CFE0D3; }
+  .dot { width: 6px; height: 6px; border-radius: 50%; background: #6FCF97; }
+  .date { font-size: 11px; color: #9DBBA3; margin-top: 10px; }
+
+  .alert {
+    margin: 14px 16px 0;
+    background: var(--danger-bg);
+    color: var(--danger);
+    padding: 10px 12px;
+    border-radius: 10px;
+    font-size: 12.5px;
+    display: none;
+    align-items: center;
+    gap: 8px;
+  }
+  .alert.show { display: flex; }
+
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    padding: 14px 16px 0;
+  }
+  .card {
+    background: var(--sage-light);
+    border-radius: 12px;
+    padding: 12px 14px;
+  }
+  .card .label { font-size: 11.5px; color: var(--muted); }
+  .card .value { font-size: 20px; font-weight: 700; margin-top: 4px; }
+  .card .hint { font-size: 10.5px; color: var(--muted); margin-top: 2px; }
+  .bar { height: 4px; background: #D4DED2; border-radius: 2px; margin-top: 6px; overflow: hidden; }
+  .bar-fill { height: 100%; background: var(--forest); }
+  .bar-fill.danger { background: var(--danger); }
+  .bar-fill.success { background: var(--success); }
+
+  .section {
+    margin: 14px 16px 0;
+    background: var(--sage-light);
+    border-radius: 12px;
+    padding: 14px;
+  }
+  .section .title { font-size: 11.5px; color: var(--muted); margin-bottom: 10px; }
+  .funnel { display: flex; align-items: center; gap: 8px; }
+  .funnel .step { flex: 1; text-align: center; background: rgba(30,61,47,0.06); border-radius: 10px; padding: 8px 4px; }
+  .funnel .step .n { font-size: 16px; font-weight: 700; color: var(--forest); }
+  .funnel .step .l { font-size: 10px; color: var(--muted); }
+  .funnel .arrow { color: var(--muted); font-size: 13px; }
+
+  .debtors-list { margin-top: 4px; }
+  .debtor-row {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 8px 0; border-top: 1px solid rgba(0,0,0,0.06);
+    font-size: 12.5px;
+  }
+  .debtor-row:first-child { border-top: none; }
+  .debtor-row .amount { color: var(--danger); font-weight: 600; }
+  .empty-hint { font-size: 12px; color: var(--muted); padding: 6px 0; }
+
+  .refresh-note { text-align: center; font-size: 10.5px; color: var(--muted); padding: 16px; }
+
+  nav {
+    display: flex; justify-content: space-around;
+    border-top: 1px solid #E4E4E4; padding: 10px 0 14px;
+    position: sticky; bottom: 0; background: var(--white);
+  }
+  nav .item { text-align: center; font-size: 9.5px; color: var(--muted); }
+  nav .item.active { color: var(--forest); font-weight: 600; }
+  nav .icon { font-size: 17px; display: block; margin-bottom: 2px; }
+</style>
+</head>
+<body>
+
+<div class="phone">
+  <header>
+    <div class="row">
+      <div>
+        <h1>Центр управления</h1>
+        <div class="sub">База отдыха «Сосновый бор»</div>
+      </div>
+      <div class="live"><span class="dot"></span>live</div>
+    </div>
+    <div class="date" id="today"></div>
+  </header>
+
+  <div class="alert" id="debt-alert">
+    ⚠️ Дебиторка превышает порог — срочно принять меры
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <div class="label">Выручка</div>
+      <div class="value" id="revenue">—</div>
+      <div class="hint" id="revenue-hint">—</div>
+      <div class="bar"><div class="bar-fill" id="revenue-bar" style="width:0%"></div></div>
+    </div>
+    <div class="card">
+      <div class="label">Загрузка домиков</div>
+      <div class="value" id="occupancy">—</div>
+      <div class="hint" id="occupancy-hint">—</div>
+      <div class="bar"><div class="bar-fill success" id="occupancy-bar" style="width:0%"></div></div>
+    </div>
+    <div class="card">
+      <div class="label">Заявки</div>
+      <div class="value" id="leads">—</div>
+      <div class="hint">новых в этом месяце</div>
+    </div>
+    <div class="card">
+      <div class="label">Дебиторка</div>
+      <div class="value" id="debt">—</div>
+      <div class="hint" id="debt-hint">—</div>
+      <div class="bar"><div class="bar-fill danger" id="debt-bar" style="width:0%"></div></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="title">Воронка</div>
+    <div class="funnel">
+      <div class="step"><div class="n" id="f-new">—</div><div class="l">заявки</div></div>
+      <div class="arrow">→</div>
+      <div class="step"><div class="n" id="f-progress">—</div><div class="l">в работе</div></div>
+      <div class="arrow">→</div>
+      <div class="step"><div class="n" id="f-booked">—</div><div class="l">брони</div></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="title">ТОП должников</div>
+    <div class="debtors-list" id="debtors-list">
+      <div class="empty-hint">Загрузка...</div>
+    </div>
+  </div>
+
+  <div class="refresh-note" id="last-updated">Обновляется автоматически</div>
+
+  <nav>
+    <div class="item active"><span class="icon">🏠</span>Главная</div>
+    <div class="item"><span class="icon">📋</span>Заявки</div>
+    <div class="item"><span class="icon">📅</span>Брони</div>
+    <div class="item"><span class="icon">💰</span>Финансы</div>
+    <div class="item"><span class="icon">🔔</span>Алерты</div>
+  </nav>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script>
+  const SUPABASE_URL = "https://ilfxyvsqintvjbifqxvr.supabase.co";
+  const SUPABASE_KEY = "sb_publishable_GEl1zhHAxT_i8zU2F86cOA_-G6n7uBH";
+  const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+  function fmtMoney(n) {
+    return Math.round(n || 0).toLocaleString("ru-RU") + " ₸";
+  }
+
+  document.getElementById("today").textContent = new Date().toLocaleDateString("ru-RU", {
+    weekday: "long", day: "numeric", month: "long"
+  });
+
+  async function loadDashboard() {
+    try {
+      const [{ data: rev }, { data: occ }, { data: funnel }, { data: debtors }] = await Promise.all([
+        sb.from("otdyh_v_revenue_vs_plan").select("*").single(),
+        sb.from("otdyh_v_occupancy_today").select("*").single(),
+        sb.from("otdyh_v_funnel_current_month").select("*").single(),
+        sb.from("otdyh_v_top_debtors").select("*"),
+      ]);
+
+      if (rev) {
+        const pct = rev.plan ? Math.min(100, Math.round((rev.revenue_month / rev.plan) * 100)) : 0;
+        document.getElementById("revenue").textContent = fmtMoney(rev.revenue_month);
+        document.getElementById("revenue-hint").textContent = `план ${fmtMoney(rev.plan)} · ${pct}%`;
+        document.getElementById("revenue-bar").style.width = pct + "%";
+      }
+
+      if (occ) {
+        const pct = occ.total_properties ? Math.round((occ.occupied_properties / occ.total_properties) * 100) : 0;
+        document.getElementById("occupancy").textContent = `${occ.occupied_properties} / ${occ.total_properties}`;
+        document.getElementById("occupancy-hint").textContent = `${pct}% занято сегодня`;
+        document.getElementById("occupancy-bar").style.width = pct + "%";
+      }
+
+      if (funnel) {
+        document.getElementById("leads").textContent = funnel.new_leads ?? 0;
+        document.getElementById("f-new").textContent = funnel.new_leads ?? 0;
+        document.getElementById("f-progress").textContent = funnel.in_progress ?? 0;
+        document.getElementById("f-booked").textContent = funnel.booked ?? 0;
+      }
+
+      const debtorsList = document.getElementById("debtors-list");
+      if (debtors && debtors.length) {
+        const totalDebt = debtors.reduce((s, d) => s + Number(d.debt), 0);
+        document.getElementById("debt").textContent = fmtMoney(totalDebt);
+        document.getElementById("debt-hint").textContent = `${debtors.length} должник(ов)`;
+        document.getElementById("debt-bar").style.width = "100%";
+
+        const threshold = 500000; // совпадает с otdyh_settings.debt_threshold
+        document.getElementById("debt-alert").classList.toggle("show", totalDebt >= threshold);
+
+        debtorsList.innerHTML = debtors.map(d => `
+          <div class="debtor-row">
+            <span>${d.guest_name}</span>
+            <span class="amount">${fmtMoney(d.debt)}</span>
+          </div>
+        `).join("");
+      } else {
+        document.getElementById("debt").textContent = "0 ₸";
+        document.getElementById("debt-hint").textContent = "нет должников";
+        document.getElementById("debt-bar").style.width = "0%";
+        document.getElementById("debt-alert").classList.remove("show");
+        debtorsList.innerHTML = `<div class="empty-hint">Должников нет</div>`;
+      }
+
+      document.getElementById("last-updated").textContent =
+        "Обновлено: " + new Date().toLocaleTimeString("ru-RU", { hour: "2-digit", minute: "2-digit" });
+    } catch (e) {
+      console.error(e);
+      document.getElementById("last-updated").textContent = "Ошибка загрузки данных";
+    }
+  }
+
+  loadDashboard();
+  setInterval(loadDashboard, 60000); // обновление раз в минуту
+</script>
+
+</body>
+</html>
