@@ -106,9 +106,9 @@
     border-top: 1px solid #E4E4E4; padding: 10px 0 14px;
     position: sticky; bottom: 0; background: var(--white);
   }
-  nav .item { text-align: center; font-size: 9.5px; color: var(--muted); }
+  nav .item { text-align: center; font-size: 9.5px; color: var(--muted); text-decoration: none; }
   nav .item.active { color: var(--forest); font-weight: 600; }
-  nav .icon { font-size: 17px; display: block; margin-bottom: 2px; }
+  nav .icon { width: 19px; height: 19px; display: block; margin: 0 auto 3px; }
 </style>
 </head>
 <body>
@@ -176,11 +176,26 @@
   <div class="refresh-note" id="last-updated">Обновляется автоматически</div>
 
   <nav>
-    <div class="item active"><span class="icon">🏠</span>Главная</div>
-    <div class="item"><span class="icon">📋</span>Заявки</div>
-    <div class="item"><span class="icon">📅</span>Брони</div>
-    <div class="item"><span class="icon">💰</span>Финансы</div>
-    <div class="item"><span class="icon">🔔</span>Алерты</div>
+    <div class="item active">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-8 9 8M5 10v10h14V10"/></svg>
+      Главная
+    </div>
+    <a class="item" href="admin.html?tab=lead">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h4"/></svg>
+      Заявки
+    </a>
+    <a class="item" href="admin.html?tab=booking">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M4 10h16M8 3v4M16 3v4"/></svg>
+      Брони
+    </a>
+    <div class="item">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 6H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+      Финансы
+    </div>
+    <div class="item">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8a6 6 0 00-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 01-3.4 0"/></svg>
+      Алерты
+    </div>
   </nav>
 </div>
 
