@@ -47,10 +47,35 @@ header .sub { font-size: 11.5px; color: #A9BDAE; margin-top: 3px; position: rela
   display: flex; align-items: center; gap: 5px; margin: 14px 18px 0;
   font-size: 12px; color: var(--muted); text-decoration: none; font-weight: 600;
 }
+.home-link {
+  position: absolute; top: 20px; right: 20px; z-index: 3;
+  width: 30px; height: 30px; border-radius: 8px; background: rgba(255,255,255,0.1);
+  display: flex; align-items: center; justify-content: center; color: #F6F3EA; text-decoration: none;
+}
 
 .tabs { display: flex; margin: 14px 18px 0; background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 3px; }
 .tab { flex: 1; text-align: center; padding: 9px 2px; font-size: 10px; color: var(--muted); border-radius: 9px; cursor: pointer; font-weight: 600; }
 .tab.active { background: var(--forest); color: #fff; }
+
+.hero-banner { position: relative; height: 128px; border-radius: 14px; overflow: hidden; margin-bottom: 18px; }
+.hero-banner img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.hero-tint { position: absolute; inset: 0; background: linear-gradient(to top, rgba(18,37,29,0.88) 0%, rgba(18,37,29,0.45) 55%, rgba(18,37,29,0.15) 100%); }
+.hero-badge {
+  position: absolute; top: 10px; left: 10px; z-index: 2;
+  display: flex; align-items: center; gap: 6px;
+  background: rgba(255,255,255,0.16); backdrop-filter: blur(3px);
+  padding: 4px 9px 4px 7px; border-radius: 20px; color: #fff;
+  font-size: 9.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.3px;
+}
+.hero-num {
+  width: 15px; height: 15px; border-radius: 50%; background: var(--amber); color: var(--forest-deep);
+  display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 800; flex-shrink: 0;
+}
+.hero-content { position: absolute; left: 0; right: 0; bottom: 0; z-index: 2; padding: 10px 14px 12px; }
+.hero-title { font-family: "Fraunces", serif; font-weight: 600; font-size: 16.5px; color: #fff; }
+.hero-stats { display: flex; gap: 16px; margin-top: 7px; }
+.hero-stat { font-size: 10px; color: rgba(255,255,255,0.75); font-weight: 600; }
+.hero-stat b { font-family: "Fraunces", serif; font-size: 15px; font-weight: 700; color: #fff; display: block; line-height: 1.2; }
 
 form { padding: 18px; display: none; }
 form.active { display: block; }
@@ -80,6 +105,9 @@ button.submit:active { background: var(--forest-deep); }
 <body>
 <div class="phone">
 <header>
+<a class="home-link" href="index.html" aria-label="На главную">
+<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8M5 10v10h14V10"/></svg>
+</a>
 <h1>Ввод данных</h1>
 <div class="sub">База отдыха «Сосновый бор»</div>
 <svg class="ridge" viewBox="0 0 400 40" preserveAspectRatio="none">
@@ -104,6 +132,19 @@ button.submit:active { background: var(--forest-deep); }
 <div class="msg" id="msg"></div>
 
 <form id="form-lead" class="active">
+<div class="hero-banner">
+<img src="cover-photo.jpg" alt="">
+<div class="hero-tint"></div>
+<div class="hero-badge"><span class="hero-num">1</span>Заявки</div>
+<div class="hero-content">
+<div class="hero-title">Новые заявки</div>
+<div class="hero-stats">
+<div class="hero-stat"><b id="stat-lead-total">—</b>всего</div>
+<div class="hero-stat"><b id="stat-lead-today">—</b>сегодня</div>
+<div class="hero-stat"><b id="stat-lead-conv">—</b>конверсия</div>
+</div>
+</div>
+</div>
 <div class="field">
 <label>Гость / компания *</label>
 <input type="text" id="l-guest" required placeholder="Например: Ержанов А.">
@@ -135,6 +176,19 @@ button.submit:active { background: var(--forest-deep); }
 </form>
 
 <form id="form-booking">
+<div class="hero-banner">
+<img src="cover-photo.jpg" alt="">
+<div class="hero-tint"></div>
+<div class="hero-badge"><span class="hero-num">3</span>Бронь</div>
+<div class="hero-content">
+<div class="hero-title">Управление бронями</div>
+<div class="hero-stats">
+<div class="hero-stat"><b id="stat-booking-total">—</b>всего</div>
+<div class="hero-stat"><b id="stat-booking-today">—</b>заезд сегодня</div>
+<div class="hero-stat"><b id="stat-booking-cancelled">—</b>отменено</div>
+</div>
+</div>
+</div>
 <div class="field">
 <label>Гость / компания *</label>
 <input type="text" id="b-guest" required placeholder="Например: Смирнова К.">
@@ -182,6 +236,19 @@ button.submit:active { background: var(--forest-deep); }
 </form>
 
 <form id="form-negotiation">
+<div class="hero-banner">
+<img src="cover-photo.jpg" alt="">
+<div class="hero-tint"></div>
+<div class="hero-badge"><span class="hero-num">2</span>Переговоры</div>
+<div class="hero-content">
+<div class="hero-title">Работа с гостями</div>
+<div class="hero-stats">
+<div class="hero-stat"><b id="stat-neg-active">—</b>в работе</div>
+<div class="hero-stat"><b id="stat-neg-rejected">—</b>отказы</div>
+<div class="hero-stat"><b id="stat-neg-conv">—</b>конверсия</div>
+</div>
+</div>
+</div>
 <div class="field">
 <label>По какой заявке *</label>
 <select id="n-lead" required><option value="">— выбрать заявку —</option></select>
@@ -212,6 +279,19 @@ button.submit:active { background: var(--forest-deep); }
 </form>
 
 <form id="form-finance">
+<div class="hero-banner">
+<img src="cover-photo.jpg" alt="">
+<div class="hero-tint"></div>
+<div class="hero-badge"><span class="hero-num">4</span>Финансы</div>
+<div class="hero-content">
+<div class="hero-title">Финансовый контроль</div>
+<div class="hero-stats">
+<div class="hero-stat"><b id="stat-fin-revenue">—</b>выручка мес</div>
+<div class="hero-stat"><b id="stat-fin-expenses">—</b>расходы мес</div>
+<div class="hero-stat"><b id="stat-fin-profit">—</b>прибыль</div>
+</div>
+</div>
+</div>
 <div class="field">
 <label>Дата *</label>
 <input type="date" id="fi-date" required>
@@ -244,6 +324,19 @@ button.submit:active { background: var(--forest-deep); }
 </form>
 
 <form id="form-settings">
+<div class="hero-banner">
+<img src="cover-photo.jpg" alt="">
+<div class="hero-tint"></div>
+<div class="hero-badge"><span class="hero-num">5</span>Настройки</div>
+<div class="hero-content">
+<div class="hero-title">Пороги уведомлений</div>
+<div class="hero-stats">
+<div class="hero-stat"><b id="stat-set-booking">—</b>порог брони</div>
+<div class="hero-stat"><b id="stat-set-debt">—</b>порог долга</div>
+<div class="hero-stat"><b id="stat-set-plan">—</b>план/мес</div>
+</div>
+</div>
+</div>
 <div class="field">
 <label>Порог "Крупная бронь", ₸</label>
 <input type="number" id="s-big-booking" placeholder="400000">
@@ -286,6 +379,68 @@ if (requestedTab) {
   const el = document.querySelector(`[data-tab="${requestedTab}"]`);
   if (el) el.click();
 }
+
+function fmtMoney(n) {
+  return Math.round(n || 0).toLocaleString("ru-RU") + " ₸";
+}
+
+async function loadHeroStats() {
+  const todayStr = new Date().toISOString().slice(0, 10);
+  const now = new Date();
+  const monthStart = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-01`;
+
+  try {
+    const [
+      { count: leadsTotal },
+      { count: leadsToday },
+      { data: funnel },
+      { count: negRejected },
+      { count: bookingsTotal },
+      { count: bookingsTodayIn },
+      { count: bookingsCancelled },
+      { data: revPlan },
+      { data: financeRows },
+    ] = await Promise.all([
+      sb.from("otdyh_leads").select("id", { count: "exact", head: true }),
+      sb.from("otdyh_leads").select("id", { count: "exact", head: true }).gte("created_at", todayStr + "T00:00:00").lte("created_at", todayStr + "T23:59:59"),
+      sb.from("otdyh_v_funnel_current_month").select("*").single(),
+      sb.from("otdyh_negotiations").select("id", { count: "exact", head: true }).eq("result", "rejected"),
+      sb.from("otdyh_bookings").select("id", { count: "exact", head: true }),
+      sb.from("otdyh_bookings").select("id", { count: "exact", head: true }).eq("check_in", todayStr),
+      sb.from("otdyh_bookings").select("id", { count: "exact", head: true }).eq("status", "cancelled"),
+      sb.from("otdyh_v_revenue_vs_plan").select("*").single(),
+      sb.from("otdyh_finance").select("staff_cost, maintenance_cost, other_cost").gte("entry_date", monthStart),
+    ]);
+
+    const conv = funnel && funnel.new_leads ? Math.round((funnel.booked / funnel.new_leads) * 100) : 0;
+
+    setText("stat-lead-total", leadsTotal ?? 0);
+    setText("stat-lead-today", leadsToday ?? 0);
+    setText("stat-lead-conv", conv + "%");
+
+    setText("stat-neg-active", funnel ? (funnel.in_progress ?? 0) : 0);
+    setText("stat-neg-rejected", negRejected ?? 0);
+    setText("stat-neg-conv", conv + "%");
+
+    setText("stat-booking-total", bookingsTotal ?? 0);
+    setText("stat-booking-today", bookingsTodayIn ?? 0);
+    setText("stat-booking-cancelled", bookingsCancelled ?? 0);
+
+    const expenses = (financeRows || []).reduce((s, r) =>
+      s + Number(r.staff_cost || 0) + Number(r.maintenance_cost || 0) + Number(r.other_cost || 0), 0);
+    const revenueMonth = revPlan ? Number(revPlan.revenue_month || 0) : 0;
+    setText("stat-fin-revenue", fmtMoney(revenueMonth));
+    setText("stat-fin-expenses", fmtMoney(expenses));
+    setText("stat-fin-profit", fmtMoney(revenueMonth - expenses));
+  } catch (e) {
+    console.error("Hero stats error:", e);
+  }
+}
+function setText(id, val) {
+  const el = document.getElementById(id);
+  if (el) el.textContent = val;
+}
+loadHeroStats();
 
 function showMsg(text, ok) {
   const m = document.getElementById("msg");
@@ -385,9 +540,18 @@ async function loadSettings() {
   if (error || !data) return;
   const map = {};
   data.forEach(row => { map[row.key] = row.value; });
-  if (map.big_booking_threshold !== undefined) document.getElementById("s-big-booking").value = map.big_booking_threshold;
-  if (map.debt_threshold !== undefined) document.getElementById("s-debt").value = map.debt_threshold;
-  if (map.monthly_revenue_plan !== undefined) document.getElementById("s-revenue-plan").value = map.monthly_revenue_plan;
+  if (map.big_booking_threshold !== undefined) {
+    document.getElementById("s-big-booking").value = map.big_booking_threshold;
+    setText("stat-set-booking", fmtMoney(map.big_booking_threshold));
+  }
+  if (map.debt_threshold !== undefined) {
+    document.getElementById("s-debt").value = map.debt_threshold;
+    setText("stat-set-debt", fmtMoney(map.debt_threshold));
+  }
+  if (map.monthly_revenue_plan !== undefined) {
+    document.getElementById("s-revenue-plan").value = map.monthly_revenue_plan;
+    setText("stat-set-plan", fmtMoney(map.monthly_revenue_plan));
+  }
 }
 loadSettings();
 
