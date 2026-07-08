@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SMB Otdyh — Центр управления</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #20302A;
+  --muted: #64766A;
+  --paper: #F2F4EC;
+  --card: #FFFFFF;
+  --forest-deep: #12251D;
+  --forest: #1E3D2F;
+  --forest-mid: #33574A;
+  --sage-tint: #E6EBDD;
+  --amber: #C9922E;
+  --amber-deep: #7C5615;
+  --amber-tint: #F6E8CB;
+  --clay: #A23E2E;
+  --clay-tint: #F5E1DC;
+  --border: #E3E7DA;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: "Manrope", -apple-system, sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+}
+.phone {
+  max-width: 420px;
+  margin: 0 auto;
+  min-height: 100vh;
+  background: var(--paper);
+  box-shadow: 0 0 50px rgba(18,37,29,0.10);
+}
+
+header { position: relative; background: var(--forest-deep); padding: 22px 20px 34px; overflow: hidden; }
+header .row { display: flex; align-items: center; justify-content: space-between; position: relative; z-index: 2; }
+header h1 {
+  font-family: "Fraunces", serif; font-weight: 600; font-style: italic;
+  font-size: 21px; margin: 0; color: #F6F3EA; letter-spacing: 0.2px;
+}
+header .sub { font-size: 11.5px; color: #A9BDAE; margin-top: 3px; letter-spacing: 0.2px; }
+.live { display: flex; align-items: center; gap: 5px; font-size: 10.5px; color: #C9B27A; font-weight: 600; letter-spacing: 0.4px; text-transform: uppercase; }
+.dot { width: 6px; height: 6px; border-radius: 50%; background: var(--amber); box-shadow: 0 0 0 3px rgba(201,146,46,0.25); }
+.date { font-size: 11.5px; color: #8FA396; margin-top: 12px; position: relative; z-index: 2; text-transform: capitalize; }
+.ridge { position: absolute; left: 0; right: 0; bottom: -1px; width: 100%; height: 34px; display: block; }
+
+.report-wrap { padding: 16px 18px 0; }
+.report-btn {
+  width: 100%;
+  display: flex; align-items: center; justify-content: center; gap: 9px;
+  padding: 13px; background: var(--amber); color: var(--forest-deep);
+  border: none; border-radius: 12px; font-size: 13.5px; font-weight: 700;
+  cursor: pointer; font-family: "Manrope", sans-serif;
+}
+.report-btn:active { background: var(--amber-deep); color: #fff; }
+.report-btn:disabled { opacity: 0.6; cursor: default; }
+.report-status { text-align: center; font-size: 11.5px; margin-top: 7px; min-height: 14px; font-weight: 600; }
+.report-status.success { color: var(--forest); }
+.report-status.error { color: var(--clay); }
+
+.alert {
+  margin: 14px 18px 0;
+  background: var(--clay-tint);
+  color: #7A2E21;
+  padding: 11px 13px;
+  border-radius: 11px;
+  font-size: 12.5px;
+  display: none;
+  align-items: center;
+  gap: 9px;
+  font-weight: 600;
+}
+.alert.show { display: flex; }
+
+.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 16px 18px 0; }
+.card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 13px 14px; }
+.card-head { display: flex; align-items: center; gap: 7px; margin-bottom: 9px; }
+.card-ic { width: 24px; height: 24px; border-radius: 7px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.card-ic.forest { background: var(--sage-tint); color: var(--forest); }
+.card-ic.amber { background: var(--amber-tint); color: var(--amber-deep); }
+.card-ic.clay { background: var(--clay-tint); color: var(--clay); }
+.card .label { font-size: 11px; color: var(--muted); font-weight: 600; }
+.card .value { font-family: "Fraunces", serif; font-size: 21px; font-weight: 600; }
+.card .hint { font-size: 10.5px; color: var(--muted); margin-top: 2px; }
+.bar { height: 4px; background: var(--sage-tint); border-radius: 2px; margin-top: 8px; overflow: hidden; }
+.bar-fill { height: 100%; background: var(--forest); border-radius: 2px; }
+.bar-fill.danger { background: var(--clay); }
+.bar-fill.amber { background: var(--amber); }
+
+.section { margin: 16px 18px 0; background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 15px; }
+.section .title { font-size: 11px; color: var(--muted); font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px; margin-bottom: 12px; }
+.funnel { display: flex; align-items: center; gap: 6px; }
+.funnel .step { flex: 1; text-align: center; background: var(--paper); border-radius: 11px; padding: 10px 4px; }
+.funnel .step .n { font-family: "Fraunces", serif; font-size: 18px; font-weight: 600; color: var(--forest); }
+.funnel .step .l { font-size: 9.5px; color: var(--muted); margin-top: 2px; font-weight: 600; }
+.funnel .arrow { color: var(--amber); font-size: 13px; flex-shrink: 0; }
+
+.debtors-list { margin-top: 2px; }
+.debtor-row { display: flex; justify-content: space-between; align-items: center; padding: 9px 0; border-top: 1px solid var(--border); font-size: 12.5px; }
+.debtor-row:first-child { border-top: none; }
+.debtor-row .name { font-weight: 600; }
+.debtor-row .amount { color: var(--clay); font-weight: 700; font-family: "Fraunces", serif; }
+.empty-hint { font-size: 12px; color: var(--muted); padding: 8px 0; }
+
+.refresh-note { text-align: center; font-size: 10.5px; color: var(--muted); padding: 18px 16px 14px; }
+
+nav {
+  display: flex; justify-content: space-around;
+  border-top: 1px solid var(--border); padding: 10px 0 14px;
+  position: sticky; bottom: 0; background: var(--card);
+}
+nav .item { text-align: center; font-size: 9.5px; color: var(--muted); text-decoration: none; font-weight: 600; position: relative; padding-top: 3px; }
+nav .item.active { color: var(--forest); }
+nav .item.active::before {
+  content: ""; position: absolute; top: -8px; left: 50%; transform: translateX(-50%) rotate(45deg);
+  width: 5px; height: 5px; background: var(--amber); border-radius: 1px;
+}
+.icon { width: 19px; height: 19px; display: block; margin: 0 auto 4px; }
+</style>
+</head>
+<body>
+<div class="phone">
+<header>
+<div class="row">
+<div>
+<h1>Сосновый бор</h1>
+<div class="sub">Центр управления базой отдыха</div>
+</div>
+<div class="live"><span class="dot"></span>live</div>
+</div>
+<div class="date" id="today"></div>
+<svg class="ridge" viewBox="0 0 400 40" preserveAspectRatio="none">
+<polygon points="0,40 0,22 20,4 40,22 60,8 80,26 100,10 120,28 140,14 160,30 180,12 200,26 220,6 240,24 260,16 280,32 300,18 320,28 340,10 360,24 380,14 400,26 400,40" fill="#33574A" opacity="0.55"/>
+<polygon points="0,40 0,30 15,16 30,30 45,20 60,32 75,18 90,30 105,22 120,34 135,20 150,30 165,24 180,34 195,22 210,30 225,26 240,34 255,20 270,30 285,24 300,32 315,22 330,30 345,26 360,34 375,24 390,30 400,32 400,40" fill="#F2F4EC"/>
+</svg>
+</header>
+
+<div class="report-wrap">
+<button class="report-btn" id="report-btn">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+Получить отчёт в Telegram
+</button>
+<div class="report-status" id="report-status"></div>
+</div>
+
+<div class="alert" id="debt-alert">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><path d="M12 9v4M12 17h.01"/></svg>
+Дебиторка превышает порог — срочно принять меры
+</div>
+
+<div class="grid">
+<div class="card">
+<div class="card-head">
+<div class="card-ic amber"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></div>
+<div class="label">Выручка</div>
+</div>
+<div class="value" id="revenue">—</div>
+<div class="hint" id="revenue-hint">—</div>
+<div class="bar"><div class="bar-fill amber" id="revenue-bar" style="width:0%"></div></div>
+</div>
+<div class="card">
+<div class="card-head">
+<div class="card-ic forest"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><path d="M9 22V12h6v10"/></svg></div>
+<div class="label">Загрузка</div>
+</div>
+<div class="value" id="occupancy">—</div>
+<div class="hint" id="occupancy-hint">—</div>
+<div class="bar"><div class="bar-fill" id="occupancy-bar" style="width:0%"></div></div>
+</div>
+<div class="card">
+<div class="card-head">
+<div class="card-ic forest"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div>
+<div class="label">Заявки</div>
+</div>
+<div class="value" id="leads">—</div>
+<div class="hint">новых в этом месяце</div>
+</div>
+<div class="card">
+<div class="card-head">
+<div class="card-ic clay"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><path d="M12 9v4M12 17h.01"/></svg></div>
+<div class="label">Дебиторка</div>
+</div>
+<div class="value" id="debt">—</div>
+<div class="hint" id="debt-hint">—</div>
+<div class="bar"><div class="bar-fill danger" id="debt-bar" style="width:0%"></div></div>
+</div>
+</div>
+
+<div class="section">
+<div class="title">Воронка продаж</div>
+<div class="funnel">
+<div class="step"><div class="n" id="f-new">—</div><div class="l">заявки</div></div>
+<div class="arrow">→</div>
+<div class="step"><div class="n" id="f-progress">—</div><div class="l">в работе</div></div>
+<div class="arrow">→</div>
+<div class="step"><div class="n" id="f-booked">—</div><div class="l">брони</div></div>
+</div>
+</div>
+
+<div class="section">
+<div class="title">Топ должников</div>
+<div class="debtors-list" id="debtors-list">
+<div class="empty-hint">Загрузка...</div>
+</div>
+</div>
+
+<div class="refresh-note" id="last-updated">Обновляется автоматически</div>
+
+<nav>
+<div class="item active">
+<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 11l9-8 9 8M5 10v10h14V10"/></svg>
+Главная
+</div>
+<a class="item" href="admin.html?tab=lead">
+<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h4"/></svg>
+Заявки
+</a>
+<a class="item" href="admin.html?tab=booking">
+<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M4 10h16M8 3v4M16 3v4"/></svg>
+Брони
+</a>
+<a class="item" href="admin.html?tab=finance">
+<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+Финансы
+</a>
+<a class="item" href="admin.html?tab=settings">
+<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 8a6 6 0 00-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 01-3.4 0"/></svg>
+Алерты
+</a>
+</nav>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script>
+const SUPABASE_URL = "https://ilfxyvsqintvjbifqxvr.supabase.co";
+const SUPABASE_KEY = "sb_publishable_GEl1zhHAxT_i8zU2F86cOA_-G6n7uBH";
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+function fmtMoney(n) {
+  return Math.round(n || 0).toLocaleString("ru-RU") + " ₸";
+}
+
+document.getElementById("today").textContent = new Date().toLocaleDateString("ru-RU", {
+  weekday: "long", day: "numeric", month: "long"
+});
+
+const reportBtn = document.getElementById("report-btn");
+const reportStatus = document.getElementById("report-status");
+reportBtn.addEventListener("click", async () => {
+  reportBtn.disabled = true;
+  const originalHTML = reportBtn.innerHTML;
+  reportBtn.textContent = "Отправляем...";
+  reportStatus.textContent = "";
+  reportStatus.className = "report-status";
+  try {
+    const res = await fetch(`${SUPABASE_URL}/functions/v1/daily-summary`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "apikey": SUPABASE_KEY,
+        "Authorization": "Bearer " + SUPABASE_KEY,
+      },
+      body: "{}",
+    });
+    if (!res.ok) throw new Error("HTTP " + res.status);
+    reportStatus.textContent = "Отправлено в Telegram ✓";
+    reportStatus.classList.add("success");
+  } catch (e) {
+    console.error(e);
+    reportStatus.textContent = "Не удалось отправить, попробуйте ещё раз";
+    reportStatus.classList.add("error");
+  } finally {
+    reportBtn.disabled = false;
+    reportBtn.innerHTML = originalHTML;
+  }
+});
+
+async function loadDashboard() {
+  try {
+    const [{ data: rev }, { data: occ }, { data: funnel }, { data: debtors }] = await Promise.all([
+      sb.from("otdyh_v_revenue_vs_plan").select("*").single(),
+      sb.from("otdyh_v_occupancy_today").select("*").single(),
+      sb.from("otdyh_v_funnel_current_month").select("*").single(),
+      sb.from("otdyh_v_top_debtors").select("*"),
+    ]);
+
+    if (rev) {
+      const pct = rev.plan ? Math.min(100, Math.round((rev.revenue_month / rev.plan) * 100)) : 0;
+      document.getElementById("revenue").textContent = fmtMoney(rev.revenue_month);
+      document.getElementById("revenue-hint").textContent = `план ${fmtMoney(rev.plan)} · ${pct}%`;
+      document.getElementById("revenue-bar").style.width = pct + "%";
+    }
+
+    if (occ) {
+      const pct = occ.total_properties ? Math.round((occ.occupied_properties / occ.total_properties) * 100) : 0;
+      document.getElementById("occupancy").textContent = `${occ.occupied_properties} / ${occ.total_properties}`;
+      document.getElementById("occupancy-hint").textContent = `${pct}% занято сегодня`;
+      document.getElementById("occupancy-bar").style.width = pct + "%";
+    }
+
+    if (funnel) {
+      document.getElementById("leads").textContent = funnel.new_leads ?? 0;
+      document.getElementById("f-new").textContent = funnel.new_leads ?? 0;
+      document.getElementById("f-progress").textContent = funnel.in_progress ?? 0;
+      document.getElementById("f-booked").textContent = funnel.booked ?? 0;
+    }
+
+    const debtorsList = document.getElementById("debtors-list");
+    if (debtors && debtors.length) {
+      const totalDebt = debtors.reduce((s, d) => s + Number(d.debt), 0);
+      document.getElementById("debt").textContent = fmtMoney(totalDebt);
+      document.getElementById("debt-hint").textContent = `${debtors.length} должник(ов)`;
+      document.getElementById("debt-bar").style.width = "100%";
+      const threshold = 500000;
+      document.getElementById("debt-alert").classList.toggle("show", totalDebt >= threshold);
+      debtorsList.innerHTML = debtors.map(d => `
+        <div class="debtor-row">
+          <span class="name">${d.guest_name}</span>
+          <span class="amount">${fmtMoney(d.debt)}</span>
+        </div>
+      `).join("");
+    } else {
+      document.getElementById("debt").textContent = "0 ₸";
+      document.getElementById("debt-hint").textContent = "нет должников";
+      document.getElementById("debt-bar").style.width = "0%";
+      document.getElementById("debt-alert").classList.remove("show");
+      debtorsList.innerHTML = `<div class="empty-hint">Должников нет</div>`;
+    }
+
+    document.getElementById("last-updated").textContent =
+      "Обновлено: " + new Date().toLocaleTimeString("ru-RU", { hour: "2-digit", minute: "2-digit" });
+  } catch (e) {
+    console.error(e);
+    document.getElementById("last-updated").textContent = "Ошибка загрузки данных";
+  }
+}
+
+loadDashboard();
+setInterval(loadDashboard, 60000);
+</script>
+</body>
+</html>
