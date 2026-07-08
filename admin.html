@@ -4,50 +4,77 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SMB Otdyh — Ввод данных</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root {
+  --ink: #20302A;
+  --muted: #64766A;
+  --paper: #F2F4EC;
+  --card: #FFFFFF;
+  --forest-deep: #12251D;
   --forest: #1E3D2F;
-  --sage-light: #E4ECE3;
-  --ink: #20301F;
-  --muted: #5B6E5E;
-  --danger: #B23A2E;
+  --forest-mid: #33574A;
+  --sage-tint: #E6EBDD;
+  --amber: #C9922E;
+  --amber-deep: #7C5615;
+  --amber-tint: #F6E8CB;
+  --clay: #A23E2E;
+  --clay-tint: #F5E1DC;
   --success: #3F7A54;
-  --success-bg: #E1EEE2;
-  --white: #FFFFFF;
+  --success-tint: #E1EEE2;
+  --border: #E3E7DA;
 }
 * { box-sizing: border-box; }
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
-  background: #F3F5F2;
+  font-family: "Manrope", -apple-system, sans-serif;
+  background: var(--paper);
   color: var(--ink);
 }
-.phone { max-width: 420px; margin: 0 auto; min-height: 100vh; background: var(--white); }
-header { background: var(--forest); color: var(--white); padding: 20px; }
-header h1 { font-size: 17px; margin: 0; font-weight: 600; }
-header .sub { font-size: 12px; color: #CFE0D3; margin-top: 2px; }
-.tabs { display: flex; margin: 16px 16px 0; background: var(--sage-light); border-radius: 10px; padding: 3px; }
-.tab { flex: 1; text-align: center; padding: 9px 2px; font-size: 10.5px; color: var(--muted); border-radius: 8px; cursor: pointer; }
-.tab.active { background: var(--white); color: var(--forest); font-weight: 600; }
-form { padding: 16px; display: none; }
+.phone { max-width: 420px; margin: 0 auto; min-height: 100vh; background: var(--paper); box-shadow: 0 0 50px rgba(18,37,29,0.10); }
+
+header { position: relative; background: var(--forest-deep); padding: 20px 20px 30px; overflow: hidden; }
+header h1 {
+  font-family: "Fraunces", serif; font-weight: 600; font-style: italic;
+  font-size: 19px; margin: 0; color: #F6F3EA; position: relative; z-index: 2;
+}
+header .sub { font-size: 11.5px; color: #A9BDAE; margin-top: 3px; position: relative; z-index: 2; }
+.ridge { position: absolute; left: 0; right: 0; bottom: -1px; width: 100%; height: 30px; display: block; }
+
+.back {
+  display: flex; align-items: center; gap: 5px; margin: 14px 18px 0;
+  font-size: 12px; color: var(--muted); text-decoration: none; font-weight: 600;
+}
+
+.tabs { display: flex; margin: 14px 18px 0; background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 3px; }
+.tab { flex: 1; text-align: center; padding: 9px 2px; font-size: 10px; color: var(--muted); border-radius: 9px; cursor: pointer; font-weight: 600; }
+.tab.active { background: var(--forest); color: #fff; }
+
+form { padding: 18px; display: none; }
 form.active { display: block; }
-.field { margin-bottom: 14px; }
-.field label { display: block; font-size: 12px; color: var(--muted); margin-bottom: 5px; }
+.field { margin-bottom: 15px; }
+.field label { display: block; font-size: 11.5px; color: var(--muted); font-weight: 600; margin-bottom: 6px; }
 .field input, .field select {
-  width: 100%; padding: 10px 12px; border: 1px solid #D9E0D7; border-radius: 8px;
-  font-size: 14px; background: var(--white); color: var(--ink);
+  width: 100%; padding: 11px 13px; border: 1px solid var(--border); border-radius: 10px;
+  font-size: 14px; background: var(--card); color: var(--ink); font-family: "Manrope", sans-serif;
 }
+.field input:focus, .field select:focus { outline: none; border-color: var(--forest-mid); }
 .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
 button.submit {
-  width: 100%; padding: 13px; background: var(--forest); color: var(--white);
-  border: none; border-radius: 10px; font-size: 14px; font-weight: 600; cursor: pointer; margin-top: 6px;
+  width: 100%; padding: 14px; background: var(--forest); color: #fff;
+  border: none; border-radius: 12px; font-size: 14px; font-weight: 700; cursor: pointer; margin-top: 8px;
+  font-family: "Manrope", sans-serif;
 }
-button.submit:active { opacity: 0.85; }
-.msg { margin: 0 16px 16px; padding: 10px 12px; border-radius: 8px; font-size: 13px; display: none; }
-.msg.success { background: var(--success-bg); color: var(--success); display: block; }
-.msg.error { background: #F6E3E0; color: var(--danger); display: block; }
-.back { display: inline-block; margin: 16px 0 0 16px; font-size: 12.5px; color: var(--muted); text-decoration: none; }
-.hint { font-size: 11.5px; color: var(--muted); margin: -8px 0 14px; }
+button.submit:active { background: var(--forest-deep); }
+
+.msg { margin: 0 18px 16px; padding: 11px 13px; border-radius: 10px; font-size: 13px; display: none; font-weight: 600; }
+.msg.success { background: var(--success-tint); color: var(--success); display: block; }
+.msg.error { background: var(--clay-tint); color: #7A2E21; display: block; }
+
+.hint { font-size: 11px; color: var(--muted); margin: -9px 0 15px; }
 </style>
 </head>
 <body>
@@ -55,8 +82,16 @@ button.submit:active { opacity: 0.85; }
 <header>
 <h1>Ввод данных</h1>
 <div class="sub">База отдыха «Сосновый бор»</div>
+<svg class="ridge" viewBox="0 0 400 40" preserveAspectRatio="none">
+<polygon points="0,40 0,22 20,4 40,22 60,8 80,26 100,10 120,28 140,14 160,30 180,12 200,26 220,6 240,24 260,16 280,32 300,18 320,28 340,10 360,24 380,14 400,26 400,40" fill="#33574A" opacity="0.55"/>
+<polygon points="0,40 0,30 15,16 30,30 45,20 60,32 75,18 90,30 105,22 120,34 135,20 150,30 165,24 180,34 195,22 210,30 225,26 240,34 255,20 270,30 285,24 300,32 315,22 330,30 345,26 360,34 375,24 390,30 400,32 400,40" fill="#F2F4EC"/>
+</svg>
 </header>
-<a class="back" href="index.html">← Назад к дашборду</a>
+
+<a class="back" href="index.html">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+Назад к дашборду
+</a>
 
 <div class="tabs">
 <div class="tab active" data-tab="lead">Заявка</div>
@@ -223,7 +258,7 @@ button.submit:active { opacity: 0.85; }
 <label>План выручки в месяц, ₸</label>
 <input type="number" id="s-revenue-plan" placeholder="4000000">
 </div>
-<div class="hint">Используется в ежедневном отчёте (факт / план)</div>
+<div class="hint">Используется в отчёте (факт / план)</div>
 <button type="submit" class="submit">Сохранить настройки</button>
 </form>
 
@@ -235,7 +270,6 @@ const SUPABASE_URL = "https://ilfxyvsqintvjbifqxvr.supabase.co";
 const SUPABASE_KEY = "sb_publishable_GEl1zhHAxT_i8zU2F86cOA_-G6n7uBH";
 const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-// Переключение вкладок
 document.querySelectorAll(".tab").forEach(tab => {
   tab.addEventListener("click", () => {
     document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
@@ -246,7 +280,6 @@ document.querySelectorAll(".tab").forEach(tab => {
   });
 });
 
-// Открыть нужную вкладку по ссылке ?tab=...
 const params = new URLSearchParams(location.search);
 const requestedTab = params.get("tab");
 if (requestedTab) {
@@ -260,7 +293,6 @@ function showMsg(text, ok) {
   m.className = "msg " + (ok ? "success" : "error");
 }
 
-// Загрузка списка домиков в оба select
 async function loadProperties() {
   const { data, error } = await sb.from("otdyh_properties").select("id, name").eq("is_active", true).order("name");
   if (error || !data) return;
@@ -270,7 +302,6 @@ async function loadProperties() {
 }
 loadProperties();
 
-// Отправка заявки
 document.getElementById("form-lead").addEventListener("submit", async (e) => {
   e.preventDefault();
   const payload = {
@@ -286,7 +317,6 @@ document.getElementById("form-lead").addEventListener("submit", async (e) => {
   e.target.reset();
 });
 
-// Отправка брони
 document.getElementById("form-booking").addEventListener("submit", async (e) => {
   e.preventDefault();
   const payload = {
@@ -305,7 +335,6 @@ document.getElementById("form-booking").addEventListener("submit", async (e) => 
   e.target.reset();
 });
 
-// Загрузка списка заявок для формы "Переговоры"
 async function loadLeads() {
   const { data, error } = await sb.from("otdyh_leads")
     .select("id, guest_name, created_at")
@@ -320,7 +349,6 @@ async function loadLeads() {
 }
 loadLeads();
 
-// Отправка переговоров
 document.getElementById("form-negotiation").addEventListener("submit", async (e) => {
   e.preventDefault();
   const payload = {
@@ -336,7 +364,6 @@ document.getElementById("form-negotiation").addEventListener("submit", async (e)
   e.target.reset();
 });
 
-// Отправка финансов
 document.getElementById("form-finance").addEventListener("submit", async (e) => {
   e.preventDefault();
   const payload = {
@@ -353,7 +380,6 @@ document.getElementById("form-finance").addEventListener("submit", async (e) => 
   e.target.reset();
 });
 
-// Загрузка текущих настроек (порогов)
 async function loadSettings() {
   const { data, error } = await sb.from("otdyh_settings").select("key, value");
   if (error || !data) return;
@@ -365,7 +391,6 @@ async function loadSettings() {
 }
 loadSettings();
 
-// Сохранение настроек
 document.getElementById("form-settings").addEventListener("submit", async (e) => {
   e.preventDefault();
   const updates = [
