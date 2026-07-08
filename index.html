@@ -37,25 +37,14 @@ body {
 .brand-name { font-family: "Fraunces", serif; font-weight: 600; font-size: 16px; line-height: 1.1; }
 .brand-sub { font-size: 10.5px; color: var(--muted); letter-spacing: 0.5px; text-transform: uppercase; font-weight: 700; }
 
-.hero-text { padding: 26px 22px 0; }
-.hero-text h1 {
-  font-family: "Fraunces", serif; font-weight: 600; font-size: 31px; line-height: 1.15;
-  margin: 0; color: var(--forest-deep);
+.mockup-wrap { padding: 18px 26px 0; text-align: center; }
+.mockup-frame { position: relative; display: inline-block; width: 100%; max-width: 320px; }
+.mockup-frame img { width: 100%; height: auto; display: block; filter: drop-shadow(0 24px 40px rgba(18,37,29,0.28)); }
+.mockup-cta {
+  position: absolute; left: 14.2%; width: 74.4%; top: 40.9%; height: 4.4%;
+  border-radius: 40px; cursor: pointer;
 }
-.hero-text h1 em { font-style: italic; color: var(--amber-deep); }
-.hero-text p { font-size: 15px; color: var(--muted); line-height: 1.55; margin: 12px 0 0; max-width: 320px; }
-
-.cta {
-  margin: 20px 22px 0;
-  display: inline-flex; align-items: center; gap: 10px;
-  background: var(--forest); color: #fff; text-decoration: none;
-  padding: 13px 18px; border-radius: 12px; font-size: 15px; font-weight: 700;
-  width: fit-content;
-}
-.cta svg { flex-shrink: 0; }
-
-.mockup-wrap { padding: 24px 26px 0; text-align: center; }
-.mockup-wrap img { width: 100%; max-width: 320px; height: auto; filter: drop-shadow(0 24px 40px rgba(18,37,29,0.28)); }
+.mockup-cta:active { background: rgba(255,255,255,0.15); }
 
 .icon-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; padding: 4px 22px 0; }
 .icon-item { text-align: center; text-decoration: none; color: var(--ink); }
@@ -87,18 +76,15 @@ body {
 </div>
 </div>
 
-<div class="hero-text">
-<h1>Ваша база отдыха<br>под контролем <em>24/7</em></h1>
-<p>Заявки, брони, дебиторка и выручка — в одном месте. Алерты приходят в Telegram сами, отчёт — по кнопке.</p>
+<div class="hero-text" style="padding-top:14px">
+<p style="font-size:12.5px;color:var(--muted);margin:0;">База отдыха «Сосновый бор»</p>
 </div>
 
-<a class="cta" href="dashboard.html">
-Открыть центр управления
-<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
-</a>
-
 <div class="mockup-wrap">
-<img src="brand-hero.jpg" alt="SMB Otdyh — фирменный стиль">
+<div class="mockup-frame">
+<img src="brand-hero.jpg" alt="SMB Otdyh — Ваша база отдыха под контролем 24/7">
+<a class="mockup-cta" href="dashboard.html" aria-label="Открыть центр управления"></a>
+</div>
 </div>
 
 <div class="icon-row">
