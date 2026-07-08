@@ -54,17 +54,8 @@ body {
 }
 .cta svg { flex-shrink: 0; }
 
-.photo-wrap {
-  margin: 24px 0 0;
-  position: relative;
-  height: 260px;
-  overflow: hidden;
-}
-.photo-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.photo-fade {
-  position: absolute; inset: 0;
-  background: linear-gradient(to bottom, rgba(18,37,29,0) 55%, var(--paper) 100%);
-}
+.mockup-wrap { padding: 24px 26px 0; text-align: center; }
+.mockup-wrap img { width: 100%; max-width: 320px; height: auto; filter: drop-shadow(0 24px 40px rgba(18,37,29,0.28)); }
 
 .icon-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; padding: 4px 22px 0; }
 .icon-item { text-align: center; text-decoration: none; color: var(--ink); }
@@ -106,9 +97,8 @@ body {
 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
 </a>
 
-<div class="photo-wrap">
-<img src="cover-photo.jpg" alt="База отдыха «Сосновый бор»">
-<div class="photo-fade"></div>
+<div class="mockup-wrap">
+<img src="brand-hero.jpg" alt="SMB Otdyh — фирменный стиль">
 </div>
 
 <div class="icon-row">
