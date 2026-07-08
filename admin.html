@@ -1,1 +1,573 @@
-<html><head><meta content="text/html; charset=UTF-8" http-equiv="content-type"><style type="text/css">@import url(https://themes.googleusercontent.com/fonts/css?kit=vzxKn6nZtIGKCOgTKQG8-3e6S71Rvb7XAk8J16JjOPI);ol{margin:0;padding:0}table td,table th{padding:0}.c1{background-color:#ffffff;color:#000000;font-weight:400;text-decoration:none;vertical-align:baseline;font-size:11pt;font-family:"Manrope";font-style:normal}.c8{background-color:#e6ebdd;color:#000000;font-weight:400;text-decoration:none;vertical-align:baseline;font-size:8pt;font-family:"Manrope";font-style:normal}.c4{background-color:#e6ebdd;color:#ffffff;font-weight:400;text-decoration:none;vertical-align:baseline;font-size:8pt;font-family:"Manrope";font-style:normal}.c2{margin-left:15pt;padding-top:0pt;padding-bottom:0pt;line-height:1.0;text-align:left;margin-right:15pt;height:11pt}.c6{color:#000000;font-weight:400;text-decoration:none;vertical-align:baseline;font-size:11pt;font-family:"Arial";font-style:normal}.c7{margin-left:22.5pt;padding-top:15pt;padding-bottom:15pt;line-height:1.0;text-align:left;margin-right:22.5pt;height:11pt}.c0{margin-left:22.5pt;padding-top:7.5pt;padding-bottom:7.5pt;line-height:1.0;text-align:center;margin-right:22.5pt}.c9{padding-top:0pt;padding-bottom:0pt;line-height:1.0;text-align:left}.c3{padding-top:0pt;padding-bottom:12pt;line-height:1.0;text-align:left}.c5{background-color:#f2f4ec;max-width:468pt;padding:72pt 72pt 72pt 72pt}.title{padding-top:24pt;color:#000000;font-weight:700;font-size:36pt;padding-bottom:6pt;font-family:"Manrope";line-height:1.0;page-break-after:avoid;text-align:left}.subtitle{padding-top:18pt;color:#666666;font-size:24pt;padding-bottom:4pt;font-family:"Georgia";line-height:1.0;page-break-after:avoid;font-style:italic;text-align:left}li{color:#000000;font-size:11pt;font-family:"Manrope"}p{margin:0;color:#000000;font-size:11pt;font-family:"Manrope"}h1{padding-top:12pt;color:#000000;font-weight:700;font-size:24pt;padding-bottom:12pt;font-family:"Manrope";line-height:1.0;text-align:left}h2{padding-top:11.2pt;color:#000000;font-weight:700;font-size:18pt;padding-bottom:11.2pt;font-family:"Manrope";line-height:1.0;text-align:left}h3{padding-top:12pt;color:#000000;font-weight:700;font-size:14pt;padding-bottom:12pt;font-family:"Manrope";line-height:1.0;text-align:left}h4{padding-top:12.8pt;color:#000000;font-weight:700;font-size:12pt;padding-bottom:12.8pt;font-family:"Manrope";line-height:1.0;text-align:left}h5{padding-top:12.8pt;color:#000000;font-weight:700;font-size:9pt;padding-bottom:12.8pt;font-family:"Manrope";line-height:1.0;text-align:left}h6{padding-top:18pt;color:#000000;font-weight:700;font-size:8pt;padding-bottom:18pt;font-family:"Manrope";line-height:1.0;text-align:left}</style></head><body class="c5 doc-content"><p class="c2"><span class="c6"></span></p><p class="c7"><span class="c6"></span></p><p class="c0"><span class="c4">&#1047;&#1072;&#1103;&#1074;&#1082;&#1072;</span></p><p class="c0"><span class="c8">&#1041;&#1088;&#1086;&#1085;&#1100;</span></p><p class="c3"><span class="c1">&#1043;&#1086;&#1089;&#1090;&#1100; *</span></p><p class="c9"><span class="c1">&#1057;&#1086;&#1093;&#1088;&#1072;&#1085;&#1080;&#1090;&#1100;</span></p></body></html>
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SMB Otdyh — Ввод данных</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #20302A;
+  --muted: #64766A;
+  --paper: #F2F4EC;
+  --card: #FFFFFF;
+  --forest-deep: #12251D;
+  --forest: #1E3D2F;
+  --forest-mid: #33574A;
+  --sage-tint: #E6EBDD;
+  --amber: #C9922E;
+  --amber-deep: #7C5615;
+  --amber-tint: #F6E8CB;
+  --clay: #A23E2E;
+  --clay-tint: #F5E1DC;
+  --success: #3F7A54;
+  --success-tint: #E1EEE2;
+  --border: #E3E7DA;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: "Manrope", -apple-system, sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+}
+.phone { max-width: 420px; margin: 0 auto; min-height: 100vh; background: var(--paper); box-shadow: 0 0 50px rgba(18,37,29,0.10); }
+
+header { position: relative; background: var(--forest-deep); padding: 20px 20px 30px; overflow: hidden; }
+header h1 {
+  font-family: "Fraunces", serif; font-weight: 600; font-style: italic;
+  font-size: 19px; margin: 0; color: #F6F3EA; position: relative; z-index: 2;
+}
+header .sub { font-size: 12.5px; color: #A9BDAE; margin-top: 3px; position: relative; z-index: 2; }
+.ridge { position: absolute; left: 0; right: 0; bottom: -1px; width: 100%; height: 30px; display: block; }
+
+.back {
+  display: flex; align-items: center; gap: 5px; margin: 14px 18px 0;
+  font-size: 13px; color: var(--muted); text-decoration: none; font-weight: 600;
+}
+.home-link {
+  position: absolute; top: 20px; right: 20px; z-index: 3;
+  width: 30px; height: 30px; border-radius: 8px; background: rgba(255,255,255,0.1);
+  display: flex; align-items: center; justify-content: center; color: #F6F3EA; text-decoration: none;
+}
+
+.tabs { display: flex; margin: 14px 18px 0; background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 3px; }
+.tab { flex: 1; text-align: center; padding: 9px 2px; font-size: 11px; color: var(--muted); border-radius: 9px; cursor: pointer; font-weight: 600; }
+.tab.active { background: var(--forest); color: #fff; }
+
+.hero-banner { position: relative; height: 130px; border-radius: 14px; overflow: hidden; margin-bottom: 18px; }
+.hero-banner img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.hero-tint { position: absolute; inset: 0; background: linear-gradient(to top, rgba(18,37,29,0.88) 0%, rgba(18,37,29,0.45) 55%, rgba(18,37,29,0.15) 100%); }
+.hero-badge {
+  position: absolute; top: 10px; left: 10px; z-index: 2;
+  display: flex; align-items: center; gap: 6px;
+  background: rgba(255,255,255,0.16); backdrop-filter: blur(3px);
+  padding: 5px 10px 5px 7px; border-radius: 20px; color: #fff;
+  font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.3px;
+}
+.hero-num {
+  width: 16px; height: 16px; border-radius: 50%; background: var(--amber); color: var(--forest-deep);
+  display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 800; flex-shrink: 0;
+}
+.hero-content { position: absolute; left: 0; right: 0; bottom: 0; z-index: 2; padding: 10px 14px 12px; }
+.hero-title { font-family: "Fraunces", serif; font-weight: 600; font-size: 18px; color: #fff; }
+.hero-stats { display: flex; gap: 16px; margin-top: 7px; }
+.hero-stat { font-size: 11px; color: rgba(255,255,255,0.75); font-weight: 600; }
+.hero-stat b { font-family: "Fraunces", serif; font-size: 16.5px; font-weight: 700; color: #fff; display: block; line-height: 1.2; }
+
+form { padding: 18px; display: none; }
+form.active { display: block; }
+.field { margin-bottom: 15px; }
+.field label { display: block; font-size: 12.5px; color: var(--muted); font-weight: 600; margin-bottom: 6px; }
+.field input, .field select {
+  width: 100%; padding: 11px 13px; border: 1px solid var(--border); border-radius: 10px;
+  font-size: 15px; background: var(--card); color: var(--ink); font-family: "Manrope", sans-serif;
+}
+.field input:focus, .field select:focus { outline: none; border-color: var(--forest-mid); }
+.row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+button.submit {
+  width: 100%; padding: 14px; background: var(--forest); color: #fff;
+  border: none; border-radius: 12px; font-size: 15px; font-weight: 700; cursor: pointer; margin-top: 8px;
+  font-family: "Manrope", sans-serif;
+}
+button.submit:active { background: var(--forest-deep); }
+
+.msg { margin: 0 18px 16px; padding: 11px 13px; border-radius: 10px; font-size: 14px; display: none; font-weight: 600; }
+.msg.success { background: var(--success-tint); color: var(--success); display: block; }
+.msg.error { background: var(--clay-tint); color: #7A2E21; display: block; }
+
+.hint { font-size: 12px; color: var(--muted); margin: -9px 0 15px; }
+</style>
+</head>
+<body>
+<div class="phone">
+<header>
+<a class="home-link" href="index.html" aria-label="На главную">
+<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8M5 10v10h14V10"/></svg>
+</a>
+<h1>Ввод данных</h1>
+<div class="sub">База отдыха «Сосновый бор»</div>
+<svg class="ridge" viewBox="0 0 400 40" preserveAspectRatio="none">
+<polygon points="0,40 0,22 20,4 40,22 60,8 80,26 100,10 120,28 140,14 160,30 180,12 200,26 220,6 240,24 260,16 280,32 300,18 320,28 340,10 360,24 380,14 400,26 400,40" fill="#33574A" opacity="0.55"/>
+<polygon points="0,40 0,30 15,16 30,30 45,20 60,32 75,18 90,30 105,22 120,34 135,20 150,30 165,24 180,34 195,22 210,30 225,26 240,34 255,20 270,30 285,24 300,32 315,22 330,30 345,26 360,34 375,24 390,30 400,32 400,40" fill="#F2F4EC"/>
+</svg>
+</header>
+
+<a class="back" href="dashboard.html">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+Назад к дашборду
+</a>
+
+<div class="tabs">
+<div class="tab active" data-tab="lead">Заявка</div>
+<div class="tab" data-tab="negotiation">Переговоры</div>
+<div class="tab" data-tab="booking">Бронь</div>
+<div class="tab" data-tab="finance">Финансы</div>
+<div class="tab" data-tab="settings">Настройки</div>
+</div>
+
+<div class="msg" id="msg"></div>
+
+<form id="form-lead" class="active">
+<div class="hero-banner">
+<img src="cover-photo.jpg" alt="">
+<div class="hero-tint"></div>
+<div class="hero-badge"><span class="hero-num">1</span>Заявки</div>
+<div class="hero-content">
+<div class="hero-title">Новые заявки</div>
+<div class="hero-stats">
+<div class="hero-stat"><b id="stat-lead-total">—</b>всего</div>
+<div class="hero-stat"><b id="stat-lead-today">—</b>сегодня</div>
+<div class="hero-stat"><b id="stat-lead-conv">—</b>конверсия</div>
+</div>
+</div>
+</div>
+<div class="field">
+<label>Гость / компания *</label>
+<input type="text" id="l-guest" required placeholder="Например: Ержанов А.">
+</div>
+<div class="row2">
+<div class="field">
+<label>Заезд</label>
+<input type="date" id="l-checkin">
+</div>
+<div class="field">
+<label>Выезд</label>
+<input type="date" id="l-checkout">
+</div>
+</div>
+<div class="field">
+<label>Домик / номер</label>
+<select id="l-property"><option value="">— не выбрано —</option></select>
+</div>
+<div class="field">
+<label>Статус</label>
+<select id="l-status">
+<option value="new">Новая</option>
+<option value="in_progress">В работе</option>
+<option value="booked">Забронировано</option>
+<option value="rejected">Отказ</option>
+</select>
+</div>
+<button type="submit" class="submit">Сохранить заявку</button>
+</form>
+
+<form id="form-booking">
+<div class="hero-banner">
+<img src="cover-photo.jpg" alt="">
+<div class="hero-tint"></div>
+<div class="hero-badge"><span class="hero-num">3</span>Бронь</div>
+<div class="hero-content">
+<div class="hero-title">Управление бронями</div>
+<div class="hero-stats">
+<div class="hero-stat"><b id="stat-booking-total">—</b>всего</div>
+<div class="hero-stat"><b id="stat-booking-today">—</b>заезд сегодня</div>
+<div class="hero-stat"><b id="stat-booking-cancelled">—</b>отменено</div>
+</div>
+</div>
+</div>
+<div class="field">
+<label>Гость / компания *</label>
+<input type="text" id="b-guest" required placeholder="Например: Смирнова К.">
+</div>
+<div class="field">
+<label>Домик / номер *</label>
+<select id="b-property" required><option value="">— выбрать —</option></select>
+</div>
+<div class="row2">
+<div class="field">
+<label>Заезд *</label>
+<input type="date" id="b-checkin" required>
+</div>
+<div class="field">
+<label>Выезд *</label>
+<input type="date" id="b-checkout" required>
+</div>
+</div>
+<div class="row2">
+<div class="field">
+<label>Сумма брони, ₸ *</label>
+<input type="number" id="b-amount" required placeholder="0">
+</div>
+<div class="field">
+<label>Доп. услуги, ₸</label>
+<input type="number" id="b-extra" placeholder="0">
+</div>
+</div>
+<div class="row2">
+<div class="field">
+<label>Оплачено, ₸</label>
+<input type="number" id="b-paid" placeholder="0">
+</div>
+<div class="field">
+<label>Статус</label>
+<select id="b-status">
+<option value="booked">Забронирован</option>
+<option value="checked_in">Заехал</option>
+<option value="checked_out">Выехал</option>
+<option value="cancelled">Отменён</option>
+</select>
+</div>
+</div>
+<button type="submit" class="submit">Сохранить бронь</button>
+</form>
+
+<form id="form-negotiation">
+<div class="hero-banner">
+<img src="cover-photo.jpg" alt="">
+<div class="hero-tint"></div>
+<div class="hero-badge"><span class="hero-num">2</span>Переговоры</div>
+<div class="hero-content">
+<div class="hero-title">Работа с гостями</div>
+<div class="hero-stats">
+<div class="hero-stat"><b id="stat-neg-active">—</b>в работе</div>
+<div class="hero-stat"><b id="stat-neg-rejected">—</b>отказы</div>
+<div class="hero-stat"><b id="stat-neg-conv">—</b>конверсия</div>
+</div>
+</div>
+</div>
+<div class="field">
+<label>По какой заявке *</label>
+<select id="n-lead" required><option value="">— выбрать заявку —</option></select>
+</div>
+<div class="field">
+<label>Результат *</label>
+<select id="n-result" required>
+<option value="interested">Интерес</option>
+<option value="reviewing">На рассмотрении</option>
+<option value="agreed">Согласование</option>
+<option value="rejected">Отказ</option>
+<option value="done">Выполнен</option>
+</select>
+</div>
+<div class="field">
+<label>Следующий шаг</label>
+<input type="text" id="n-next-step" placeholder="Например: перезвонить">
+</div>
+<div class="field">
+<label>Дата следующего контакта</label>
+<input type="date" id="n-next-date">
+</div>
+<div class="field">
+<label>Комментарий</label>
+<input type="text" id="n-comment" placeholder="Детали разговора">
+</div>
+<button type="submit" class="submit">Сохранить переговоры</button>
+</form>
+
+<form id="form-finance">
+<div class="hero-banner">
+<img src="cover-photo.jpg" alt="">
+<div class="hero-tint"></div>
+<div class="hero-badge"><span class="hero-num">4</span>Финансы</div>
+<div class="hero-content">
+<div class="hero-title">Финансовый контроль</div>
+<div class="hero-stats">
+<div class="hero-stat"><b id="stat-fin-revenue">—</b>выручка мес</div>
+<div class="hero-stat"><b id="stat-fin-expenses">—</b>расходы мес</div>
+<div class="hero-stat"><b id="stat-fin-profit">—</b>прибыль</div>
+</div>
+</div>
+</div>
+<div class="field">
+<label>Дата *</label>
+<input type="date" id="fi-date" required>
+</div>
+<div class="row2">
+<div class="field">
+<label>Выручка, ₸</label>
+<input type="number" id="fi-revenue" placeholder="0">
+</div>
+<div class="field">
+<label>ЗП персонала, ₸</label>
+<input type="number" id="fi-staff" placeholder="0">
+</div>
+</div>
+<div class="row2">
+<div class="field">
+<label>Обслуживание, ₸</label>
+<input type="number" id="fi-maintenance" placeholder="0">
+</div>
+<div class="field">
+<label>Прочие расходы, ₸</label>
+<input type="number" id="fi-other" placeholder="0">
+</div>
+</div>
+<div class="field">
+<label>Комментарий</label>
+<input type="text" id="fi-comment" placeholder="Пояснение при необходимости">
+</div>
+<button type="submit" class="submit">Сохранить запись</button>
+</form>
+
+<form id="form-settings">
+<div class="hero-banner">
+<img src="cover-photo.jpg" alt="">
+<div class="hero-tint"></div>
+<div class="hero-badge"><span class="hero-num">5</span>Настройки</div>
+<div class="hero-content">
+<div class="hero-title">Пороги уведомлений</div>
+<div class="hero-stats">
+<div class="hero-stat"><b id="stat-set-booking">—</b>порог брони</div>
+<div class="hero-stat"><b id="stat-set-debt">—</b>порог долга</div>
+<div class="hero-stat"><b id="stat-set-plan">—</b>план/мес</div>
+</div>
+</div>
+</div>
+<div class="field">
+<label>Порог "Крупная бронь", ₸</label>
+<input type="number" id="s-big-booking" placeholder="400000">
+</div>
+<div class="hint">Если сумма брони больше этого числа — придёт алерт в Telegram</div>
+<div class="field">
+<label>Порог "Дебиторка", ₸</label>
+<input type="number" id="s-debt" placeholder="500000">
+</div>
+<div class="hint">Если общий долг гостей превысит эту сумму — придёт алерт</div>
+<div class="field">
+<label>План выручки в месяц, ₸</label>
+<input type="number" id="s-revenue-plan" placeholder="4000000">
+</div>
+<div class="hint">Используется в отчёте (факт / план)</div>
+<button type="submit" class="submit">Сохранить настройки</button>
+</form>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script>
+const SUPABASE_URL = "https://ilfxyvsqintvjbifqxvr.supabase.co";
+const SUPABASE_KEY = "sb_publishable_GEl1zhHAxT_i8zU2F86cOA_-G6n7uBH";
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+document.querySelectorAll(".tab").forEach(tab => {
+  tab.addEventListener("click", () => {
+    document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+    document.querySelectorAll("form").forEach(f => f.classList.remove("active"));
+    tab.classList.add("active");
+    document.getElementById("form-" + tab.dataset.tab).classList.add("active");
+    document.getElementById("msg").style.display = "none";
+  });
+});
+
+const params = new URLSearchParams(location.search);
+const requestedTab = params.get("tab");
+if (requestedTab) {
+  const el = document.querySelector(`[data-tab="${requestedTab}"]`);
+  if (el) el.click();
+}
+
+function fmtMoney(n) {
+  return Math.round(n || 0).toLocaleString("ru-RU") + " ₸";
+}
+
+async function loadHeroStats() {
+  const todayStr = new Date().toISOString().slice(0, 10);
+  const now = new Date();
+  const monthStart = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-01`;
+
+  try {
+    const [
+      { count: leadsTotal },
+      { count: leadsToday },
+      { data: funnel },
+      { count: negRejected },
+      { count: bookingsTotal },
+      { count: bookingsTodayIn },
+      { count: bookingsCancelled },
+      { data: revPlan },
+      { data: financeRows },
+    ] = await Promise.all([
+      sb.from("otdyh_leads").select("id", { count: "exact", head: true }),
+      sb.from("otdyh_leads").select("id", { count: "exact", head: true }).gte("created_at", todayStr + "T00:00:00").lte("created_at", todayStr + "T23:59:59"),
+      sb.from("otdyh_v_funnel_current_month").select("*").single(),
+      sb.from("otdyh_negotiations").select("id", { count: "exact", head: true }).eq("result", "rejected"),
+      sb.from("otdyh_bookings").select("id", { count: "exact", head: true }),
+      sb.from("otdyh_bookings").select("id", { count: "exact", head: true }).eq("check_in", todayStr),
+      sb.from("otdyh_bookings").select("id", { count: "exact", head: true }).eq("status", "cancelled"),
+      sb.from("otdyh_v_revenue_vs_plan").select("*").single(),
+      sb.from("otdyh_finance").select("staff_cost, maintenance_cost, other_cost").gte("entry_date", monthStart),
+    ]);
+
+    const conv = funnel && funnel.new_leads ? Math.round((funnel.booked / funnel.new_leads) * 100) : 0;
+
+    setText("stat-lead-total", leadsTotal ?? 0);
+    setText("stat-lead-today", leadsToday ?? 0);
+    setText("stat-lead-conv", conv + "%");
+
+    setText("stat-neg-active", funnel ? (funnel.in_progress ?? 0) : 0);
+    setText("stat-neg-rejected", negRejected ?? 0);
+    setText("stat-neg-conv", conv + "%");
+
+    setText("stat-booking-total", bookingsTotal ?? 0);
+    setText("stat-booking-today", bookingsTodayIn ?? 0);
+    setText("stat-booking-cancelled", bookingsCancelled ?? 0);
+
+    const expenses = (financeRows || []).reduce((s, r) =>
+      s + Number(r.staff_cost || 0) + Number(r.maintenance_cost || 0) + Number(r.other_cost || 0), 0);
+    const revenueMonth = revPlan ? Number(revPlan.revenue_month || 0) : 0;
+    setText("stat-fin-revenue", fmtMoney(revenueMonth));
+    setText("stat-fin-expenses", fmtMoney(expenses));
+    setText("stat-fin-profit", fmtMoney(revenueMonth - expenses));
+  } catch (e) {
+    console.error("Hero stats error:", e);
+  }
+}
+function setText(id, val) {
+  const el = document.getElementById(id);
+  if (el) el.textContent = val;
+}
+loadHeroStats();
+
+function showMsg(text, ok) {
+  const m = document.getElementById("msg");
+  m.textContent = text;
+  m.className = "msg " + (ok ? "success" : "error");
+}
+
+async function loadProperties() {
+  const { data, error } = await sb.from("otdyh_properties").select("id, name").eq("is_active", true).order("name");
+  if (error || !data) return;
+  const opts = data.map(p => `<option value="${p.id}">${p.name}</option>`).join("");
+  document.getElementById("l-property").insertAdjacentHTML("beforeend", opts);
+  document.getElementById("b-property").insertAdjacentHTML("beforeend", opts);
+}
+loadProperties();
+
+document.getElementById("form-lead").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const payload = {
+    guest_name: document.getElementById("l-guest").value,
+    check_in: document.getElementById("l-checkin").value || null,
+    check_out: document.getElementById("l-checkout").value || null,
+    property_id: document.getElementById("l-property").value || null,
+    status: document.getElementById("l-status").value,
+  };
+  const { error } = await sb.from("otdyh_leads").insert(payload);
+  if (error) { showMsg("Ошибка: " + error.message, false); return; }
+  showMsg("Заявка сохранена", true);
+  e.target.reset();
+});
+
+document.getElementById("form-booking").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const payload = {
+    guest_name: document.getElementById("b-guest").value,
+    property_id: document.getElementById("b-property").value,
+    check_in: document.getElementById("b-checkin").value,
+    check_out: document.getElementById("b-checkout").value,
+    total_amount: Number(document.getElementById("b-amount").value || 0),
+    extra_services_amount: Number(document.getElementById("b-extra").value || 0),
+    paid_total: Number(document.getElementById("b-paid").value || 0),
+    status: document.getElementById("b-status").value,
+  };
+  const { error } = await sb.from("otdyh_bookings").insert(payload);
+  if (error) { showMsg("Ошибка: " + error.message, false); return; }
+  showMsg("Бронь сохранена", true);
+  e.target.reset();
+});
+
+async function loadLeads() {
+  const { data, error } = await sb.from("otdyh_leads")
+    .select("id, guest_name, created_at")
+    .order("created_at", { ascending: false })
+    .limit(30);
+  if (error || !data) return;
+  const opts = data.map(l => {
+    const d = new Date(l.created_at).toLocaleDateString("ru-RU");
+    return `<option value="${l.id}">${l.guest_name} (${d})</option>`;
+  }).join("");
+  document.getElementById("n-lead").insertAdjacentHTML("beforeend", opts);
+}
+loadLeads();
+
+document.getElementById("form-negotiation").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const payload = {
+    lead_id: document.getElementById("n-lead").value,
+    result: document.getElementById("n-result").value,
+    next_step: document.getElementById("n-next-step").value || null,
+    next_contact_date: document.getElementById("n-next-date").value || null,
+    comment: document.getElementById("n-comment").value || null,
+  };
+  const { error } = await sb.from("otdyh_negotiations").insert(payload);
+  if (error) { showMsg("Ошибка: " + error.message, false); return; }
+  showMsg("Переговоры сохранены", true);
+  e.target.reset();
+});
+
+document.getElementById("form-finance").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const payload = {
+    entry_date: document.getElementById("fi-date").value,
+    revenue: Number(document.getElementById("fi-revenue").value || 0),
+    staff_cost: Number(document.getElementById("fi-staff").value || 0),
+    maintenance_cost: Number(document.getElementById("fi-maintenance").value || 0),
+    other_cost: Number(document.getElementById("fi-other").value || 0),
+    comment: document.getElementById("fi-comment").value || null,
+  };
+  const { error } = await sb.from("otdyh_finance").insert(payload);
+  if (error) { showMsg("Ошибка: " + error.message, false); return; }
+  showMsg("Финансовая запись сохранена", true);
+  e.target.reset();
+});
+
+async function loadSettings() {
+  const { data, error } = await sb.from("otdyh_settings").select("key, value");
+  if (error || !data) return;
+  const map = {};
+  data.forEach(row => { map[row.key] = row.value; });
+  if (map.big_booking_threshold !== undefined) {
+    document.getElementById("s-big-booking").value = map.big_booking_threshold;
+    setText("stat-set-booking", fmtMoney(map.big_booking_threshold));
+  }
+  if (map.debt_threshold !== undefined) {
+    document.getElementById("s-debt").value = map.debt_threshold;
+    setText("stat-set-debt", fmtMoney(map.debt_threshold));
+  }
+  if (map.monthly_revenue_plan !== undefined) {
+    document.getElementById("s-revenue-plan").value = map.monthly_revenue_plan;
+    setText("stat-set-plan", fmtMoney(map.monthly_revenue_plan));
+  }
+}
+loadSettings();
+
+document.getElementById("form-settings").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const updates = [
+    { key: "big_booking_threshold", value: Number(document.getElementById("s-big-booking").value || 0) },
+    { key: "debt_threshold", value: Number(document.getElementById("s-debt").value || 0) },
+    { key: "monthly_revenue_plan", value: Number(document.getElementById("s-revenue-plan").value || 0) },
+  ];
+  for (const u of updates) {
+    const { error } = await sb.from("otdyh_settings").update({ value: u.value }).eq("key", u.key);
+    if (error) { showMsg("Ошибка: " + error.message, false); return; }
+  }
+  showMsg("Настройки сохранены", true);
+});
+</script>
+</body>
+</html>
