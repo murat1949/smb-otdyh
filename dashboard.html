@@ -48,8 +48,37 @@ header h1 {
 header .sub { font-size: 11.5px; color: #A9BDAE; margin-top: 3px; letter-spacing: 0.2px; }
 .live { display: flex; align-items: center; gap: 5px; font-size: 10.5px; color: #C9B27A; font-weight: 600; letter-spacing: 0.4px; text-transform: uppercase; }
 .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--amber); box-shadow: 0 0 0 3px rgba(201,146,46,0.25); }
+.home-link {
+  width: 30px; height: 30px; border-radius: 8px; background: rgba(255,255,255,0.1);
+  display: flex; align-items: center; justify-content: center; color: #F6F3EA; text-decoration: none; flex-shrink: 0;
+}
+.header-actions { display: flex; align-items: center; gap: 10px; }
 .date { font-size: 11.5px; color: #8FA396; margin-top: 12px; position: relative; z-index: 2; text-transform: capitalize; }
 .ridge { position: absolute; left: 0; right: 0; bottom: -1px; width: 100%; height: 34px; display: block; }
+
+.pill-row { display: flex; gap: 8px; padding: 14px 18px 0; }
+.pill { flex: 1; background: var(--card); border: 1px solid var(--border); border-radius: 11px; padding: 9px 10px; text-align: center; }
+.pill .pill-value { font-family: "Fraunces", serif; font-size: 15px; font-weight: 600; }
+.pill .pill-label { font-size: 9px; color: var(--muted); font-weight: 700; text-transform: uppercase; letter-spacing: 0.3px; margin-top: 1px; }
+
+.advisory {
+  margin: 14px 18px 0; background: var(--amber-tint); color: var(--amber-deep);
+  padding: 11px 13px; border-radius: 11px; font-size: 12px; font-weight: 600;
+  display: none; align-items: center; gap: 9px;
+}
+.advisory.show { display: flex; }
+
+.ring-card { display: flex; align-items: center; gap: 11px; }
+.ring-wrap { position: relative; width: 52px; height: 52px; flex-shrink: 0; }
+.ring { position: absolute; inset: 0; border-radius: 50%; }
+.ring-hole {
+  position: absolute; inset: 6px; background: var(--card); border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: "Fraunces", serif; font-weight: 700; font-size: 12px; color: var(--forest);
+}
+.ring-info .label { font-size: 11px; color: var(--muted); font-weight: 600; }
+.ring-info .value { font-family: "Fraunces", serif; font-size: 17px; font-weight: 600; margin-top: 2px; }
+.ring-info .hint { font-size: 10px; color: var(--muted); margin-top: 1px; }
 
 .report-wrap { padding: 16px 18px 0; }
 .report-btn {
@@ -133,7 +162,12 @@ nav .item.active::before {
 <h1>Сосновый бор</h1>
 <div class="sub">Центр управления базой отдыха</div>
 </div>
+<div class="header-actions">
+<a class="home-link" href="index.html" aria-label="На главную">
+<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8M5 10v10h14V10"/></svg>
+</a>
 <div class="live"><span class="dot"></span>live</div>
+</div>
 </div>
 <div class="date" id="today"></div>
 <svg class="ridge" viewBox="0 0 400 40" preserveAspectRatio="none">
@@ -141,6 +175,17 @@ nav .item.active::before {
 <polygon points="0,40 0,30 15,16 30,30 45,20 60,32 75,18 90,30 105,22 120,34 135,20 150,30 165,24 180,34 195,22 210,30 225,26 240,34 255,20 270,30 285,24 300,32 315,22 330,30 345,26 360,34 375,24 390,30 400,32 400,40" fill="#F2F4EC"/>
 </svg>
 </header>
+
+<div class="pill-row">
+<div class="pill"><div class="pill-value" id="pill-revenue">—</div><div class="pill-label">Выручка сегодня</div></div>
+<div class="pill"><div class="pill-value" id="pill-bookings">—</div><div class="pill-label">Броней сегодня</div></div>
+<div class="pill"><div class="pill-value" id="pill-leads">—</div><div class="pill-label">Заявок сегодня</div></div>
+</div>
+
+<div class="advisory" id="plan-advisory">
+<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+<span id="plan-advisory-text">План выполнения ниже ожидаемого</span>
+</div>
 
 <div class="report-wrap">
 <button class="report-btn" id="report-btn">
@@ -156,23 +201,21 @@ nav .item.active::before {
 </div>
 
 <div class="grid">
-<div class="card">
-<div class="card-head">
-<div class="card-ic amber"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></div>
+<div class="card ring-card">
+<div class="ring-wrap"><div class="ring" id="revenue-ring" style="background:conic-gradient(var(--amber) 0%, var(--amber-tint) 0%)"></div><div class="ring-hole" id="revenue-pct">0%</div></div>
+<div class="ring-info">
 <div class="label">Выручка</div>
-</div>
 <div class="value" id="revenue">—</div>
 <div class="hint" id="revenue-hint">—</div>
-<div class="bar"><div class="bar-fill amber" id="revenue-bar" style="width:0%"></div></div>
 </div>
-<div class="card">
-<div class="card-head">
-<div class="card-ic forest"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><path d="M9 22V12h6v10"/></svg></div>
+</div>
+<div class="card ring-card">
+<div class="ring-wrap"><div class="ring" id="occupancy-ring" style="background:conic-gradient(var(--forest) 0%, var(--sage-tint) 0%)"></div><div class="ring-hole" id="occupancy-pct">0%</div></div>
+<div class="ring-info">
 <div class="label">Загрузка</div>
-</div>
 <div class="value" id="occupancy">—</div>
 <div class="hint" id="occupancy-hint">—</div>
-<div class="bar"><div class="bar-fill" id="occupancy-bar" style="width:0%"></div></div>
+</div>
 </div>
 <div class="card">
 <div class="card-head">
@@ -284,25 +327,44 @@ reportBtn.addEventListener("click", async () => {
 
 async function loadDashboard() {
   try {
-    const [{ data: rev }, { data: occ }, { data: funnel }, { data: debtors }] = await Promise.all([
+    const todayStr = new Date().toISOString().slice(0, 10);
+    const startOfDay = todayStr + "T00:00:00";
+    const endOfDay = todayStr + "T23:59:59";
+
+    const [{ data: rev }, { data: occ }, { data: funnel }, { data: debtors }, financeToday, bookingsToday, leadsToday] = await Promise.all([
       sb.from("otdyh_v_revenue_vs_plan").select("*").single(),
       sb.from("otdyh_v_occupancy_today").select("*").single(),
       sb.from("otdyh_v_funnel_current_month").select("*").single(),
       sb.from("otdyh_v_top_debtors").select("*"),
+      sb.from("otdyh_finance").select("revenue").eq("entry_date", todayStr),
+      sb.from("otdyh_bookings").select("id", { count: "exact", head: true }).gte("created_at", startOfDay).lte("created_at", endOfDay),
+      sb.from("otdyh_leads").select("id", { count: "exact", head: true }).gte("created_at", startOfDay).lte("created_at", endOfDay),
     ]);
 
+    let revenuePct = 0;
     if (rev) {
-      const pct = rev.plan ? Math.min(100, Math.round((rev.revenue_month / rev.plan) * 100)) : 0;
+      revenuePct = rev.plan ? Math.min(100, Math.round((rev.revenue_month / rev.plan) * 100)) : 0;
       document.getElementById("revenue").textContent = fmtMoney(rev.revenue_month);
-      document.getElementById("revenue-hint").textContent = `план ${fmtMoney(rev.plan)} · ${pct}%`;
-      document.getElementById("revenue-bar").style.width = pct + "%";
+      document.getElementById("revenue-hint").textContent = `план ${fmtMoney(rev.plan)} · ${revenuePct}%`;
+      document.getElementById("revenue-ring").style.background =
+        `conic-gradient(var(--amber) ${revenuePct}%, var(--amber-tint) 0)`;
+      document.getElementById("revenue-pct").textContent = revenuePct + "%";
+    }
+
+    const advisory = document.getElementById("plan-advisory");
+    if (rev && rev.plan) {
+      advisory.classList.toggle("show", revenuePct < 50);
+      document.getElementById("plan-advisory-text").textContent =
+        `План выполнения ниже ожидаемого — ${revenuePct}%`;
     }
 
     if (occ) {
       const pct = occ.total_properties ? Math.round((occ.occupied_properties / occ.total_properties) * 100) : 0;
       document.getElementById("occupancy").textContent = `${occ.occupied_properties} / ${occ.total_properties}`;
       document.getElementById("occupancy-hint").textContent = `${pct}% занято сегодня`;
-      document.getElementById("occupancy-bar").style.width = pct + "%";
+      document.getElementById("occupancy-ring").style.background =
+        `conic-gradient(var(--forest) ${pct}%, var(--sage-tint) 0)`;
+      document.getElementById("occupancy-pct").textContent = pct + "%";
     }
 
     if (funnel) {
@@ -311,6 +373,11 @@ async function loadDashboard() {
       document.getElementById("f-progress").textContent = funnel.in_progress ?? 0;
       document.getElementById("f-booked").textContent = funnel.booked ?? 0;
     }
+
+    const revToday = (financeToday.data || []).reduce((s, r) => s + Number(r.revenue || 0), 0);
+    document.getElementById("pill-revenue").textContent = revToday ? fmtMoney(revToday) : "0 ₸";
+    document.getElementById("pill-bookings").textContent = bookingsToday.count ?? 0;
+    document.getElementById("pill-leads").textContent = leadsToday.count ?? 0;
 
     const debtorsList = document.getElementById("debtors-list");
     if (debtors && debtors.length) {
